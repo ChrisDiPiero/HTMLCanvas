@@ -7,23 +7,33 @@ canvas.height = window.innerHeight;
 
 ctx.lineJoin = 'round';
 ctx.lineCap = 'round';
-ctx.lineWidth = 50;
 
 let isDrawing = false;
 let lastX = 0;
 let lastY = 0;
 let hue = 0;
+let width = 5;
+let bigLittle = true;
 
 function draw(e) {
   if(!isDrawing) return; // stop the fn from running when they are not moused
   console.log(e);
   ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+  ctx.lineWidth = width;
   ctx.beginPath();
   ctx.moveTo(lastX, lastY);
   ctx.lineTo(e.offsetX, e.offsetY);
   ctx.stroke();
   [lastX, lastY] = [e.offsetX, e.offsetY];
   hue++;
+  if (bigLittle) {
+    width++
+  } else {
+    width--
+  }
+  if (width > 50 || width < 5) {
+    bigLittle = !bigLittle
+  }
 } 
 
 canvas.addEventListener('mousemove', draw);
